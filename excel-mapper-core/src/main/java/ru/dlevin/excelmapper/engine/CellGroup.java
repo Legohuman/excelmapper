@@ -28,8 +28,9 @@ public class CellGroup implements Rectangle {
         return cursor.getDirection();
     }
 
-    public void setCursorMovementDirection(MovementDirection cursorMovementDirection) {
+    public CellGroup setCursorMovementDirection(MovementDirection cursorMovementDirection) {
         cursor.setDirection(cursorMovementDirection);
+        return this;
     }
 
     public int cellsCount() {
@@ -137,5 +138,80 @@ public class CellGroup implements Rectangle {
 
     public Set<Map.Entry<CellCoordinate, CellDefinition>> getEntries() {
         return new HashSet<Map.Entry<CellCoordinate, CellDefinition>>(cells.entrySet());
+    }
+
+    public CellGroup plusColumn(int column) {
+        cursor.plusColumn(column);
+        return this;
+    }
+
+    public CellGroup plusRow(int row) {
+        cursor.plusRow(row);
+        return this;
+    }
+
+    public CellGroup minusColumn(int column) {
+        cursor.minusColumn(column);
+        return this;
+    }
+
+    public CellGroup minusRow(int row) {
+        cursor.minusRow(row);
+        return this;
+    }
+
+    public CellGroup nextColumn() {
+        cursor.nextColumn();
+        return this;
+    }
+
+    public CellGroup nextRow() {
+        cursor.nextRow();
+        return this;
+    }
+
+    public CellGroup prevColumn() {
+        cursor.prevColumn();
+        return this;
+    }
+
+    public CellGroup prevRow() {
+        cursor.prevRow();
+        return this;
+    }
+
+    public CellGroup plusCoordinate(CellCoordinate coordinate) {
+        cursor.plusCoordinate(coordinate);
+        return this;
+    }
+
+    public CellGroup minusCoordinate(CellCoordinate coordinate) {
+        cursor.minusCoordinate(coordinate);
+        return this;
+    }
+
+    public CellGroup plusCoordinate(int column, int row) {
+        cursor.plusCoordinate(column, row);
+        return this;
+    }
+
+    public CellGroup minusCoordinate(int column, int row) {
+        cursor.minusCoordinate(column, row);
+        return this;
+    }
+
+    public CellGroup resetColumn() {
+        cursor.resetColumn();
+        return this;
+    }
+
+    public CellGroup resetRow() {
+        cursor.resetRow();
+        return this;
+    }
+
+    public CellGroup resetCoordinate() {
+        cursor.resetCoordinate();
+        return this;
     }
 }

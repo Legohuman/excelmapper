@@ -5,7 +5,7 @@ package ru.dlevin.excelmapper.engine;
  * Date: 14.03.14
  */
 public enum MovementDirection {
-    UNDEFINED,
+    NONE,
     DOWN,
     RIGHT,
     UP,

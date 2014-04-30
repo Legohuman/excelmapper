@@ -21,6 +21,10 @@ public class CellCoordinate implements Coordinate {
         this.column = column;
     }
 
+    public CellCoordinate(CellCoordinate coordinate) {
+        this(coordinate.getColumn(), coordinate.getRow());
+    }
+
     public int getRow() {
         return row;
     }
