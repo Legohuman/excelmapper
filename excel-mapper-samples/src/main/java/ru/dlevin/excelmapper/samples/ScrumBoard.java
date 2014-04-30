@@ -27,7 +27,7 @@ public class ScrumBoard {
             fileOut = new FileOutputStream("scrum-board.xls");
 
             Font userStoryTitleFont = createUserStoryTitleFont(wb);
-            Font ticketCategoryTitleFont = createUserStoryTitleFont(wb);
+            Font ticketCategoryTitleFont = createTicketCategoryTitleFont(wb);
             Font ticketTitleFont = createTicketTitleFont(wb);
 
             ImportanceStyleReference ticketHeaderStyleRefernce = new ImportanceStyleReference();
@@ -53,6 +53,8 @@ public class ScrumBoard {
                 .addCell(new CellDefinition(value("In progress"), ticketCategoryStyleRef, 2, 1))
                 .addCell(new CellDefinition(value("Done"), ticketCategoryStyleRef, 2, 1));
 
+
+            StaticCellStyleReference longTextStyleRef = new StaticCellStyleReference(createLongTextStyle(wb));
             CellGroup ticketGroup = new CellGroup()
                 .setCursorMovementDirection(MovementDirection.DOWN)
                 .addCell(new CellDefinition(new IssueNumberAndTypeValueReference(), ticketHeaderStyleRefernce, 2, 1))
@@ -60,8 +62,8 @@ public class ScrumBoard {
                 .addCell(value("Assignee:")).nextColumn()
                 .addCell(property("asignee")).nextRow().resetColumn()
                 .setCursorMovementDirection(MovementDirection.DOWN)
-                .addCell(new CellDefinition(property("title"), 2, 1))
-                .addCell(new CellDefinition(property("description"), 2, 1));
+                .addCell(new CellDefinition(property("title"), longTextStyleRef, 2, 1))
+                .addCell(new CellDefinition(property("description"), longTextStyleRef, 2, 1));
 
             CompositeRectangle containerGroup = new CompositeRectangle();
             ItemContainerFactory factory = new ItemContainerFactory();
