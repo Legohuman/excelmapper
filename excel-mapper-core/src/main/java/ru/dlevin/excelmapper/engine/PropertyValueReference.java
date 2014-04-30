@@ -4,8 +4,8 @@ package ru.dlevin.excelmapper.engine;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public abstract class PropertyValueReference<T>
-    implements ReadableValueReference<T>, WritableValueReference<T>, ContextAwareValueReference {
+public abstract class PropertyValueReference<C, T>
+    implements ReadableValueReference<T>, WritableValueReference<T>, ContextAware<C> {
 
     private final String property;
 

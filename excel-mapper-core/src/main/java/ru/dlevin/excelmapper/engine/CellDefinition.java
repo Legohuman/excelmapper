@@ -6,41 +6,41 @@ import ru.dlevin.excelmapper.utils.Validate;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class CellDefinition implements Rectangle {
+public class CellDefinition<T> implements Rectangle {
 
     public static final CellStyleReference DEFAULT_CELL_STYLE_REF = CellStyleReference.UNDEFINED;
     public static final int DEFAULT_ROW_SPAN = 1;
     public static final int DEFAULT_COL_SPAN = 1;
 
-    private ReadableValueReference<?> valueRef;
+    private ReadableValueReference<T> valueRef;
     private CellStyleReference cellStyleReference = DEFAULT_CELL_STYLE_REF;
     private int rowSpan = DEFAULT_ROW_SPAN;
     private int colSpan = DEFAULT_COL_SPAN;
 
-    public CellDefinition(ReadableValueReference<?> valueRef) {
+    public CellDefinition(ReadableValueReference<T> valueRef) {
         this(valueRef, DEFAULT_CELL_STYLE_REF);
     }
 
-    public CellDefinition(ReadableValueReference<?> valueRef, CellStyleReference cellStyleReference) {
+    public CellDefinition(ReadableValueReference<T> valueRef, CellStyleReference cellStyleReference) {
         this(valueRef, cellStyleReference, DEFAULT_COL_SPAN, DEFAULT_ROW_SPAN);
     }
 
-    public CellDefinition(ReadableValueReference<?> valueRef, int colSpan, int rowSpan) {
+    public CellDefinition(ReadableValueReference<T> valueRef, int colSpan, int rowSpan) {
         this(valueRef, DEFAULT_CELL_STYLE_REF, colSpan, rowSpan);
     }
 
-    public CellDefinition(ReadableValueReference<?> valueRef, CellStyleReference cellStyleReference, int colSpan, int rowSpan) {
+    public CellDefinition(ReadableValueReference<T> valueRef, CellStyleReference cellStyleReference, int colSpan, int rowSpan) {
         setValueRef(valueRef);
         setCellStyleReference(cellStyleReference);
         setRowSpan(rowSpan);
         setColSpan(colSpan);
     }
 
-    public ReadableValueReference<?> getValueRef() {
+    public ReadableValueReference<T> getValueRef() {
         return valueRef;
     }
 
-    public void setValueRef(ReadableValueReference<?> valueRef) {
+    public void setValueRef(ReadableValueReference<T> valueRef) {
         Validate.notNull(valueRef, "Can not set null value reference for cell definition.");
         this.valueRef = valueRef;
     }

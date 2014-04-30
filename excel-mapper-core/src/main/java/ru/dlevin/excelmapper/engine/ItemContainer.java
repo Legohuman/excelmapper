@@ -74,14 +74,14 @@ public class ItemContainer implements Rectangle {
         return cursor.getCurrentCoordinate();
     }
 
-    public <T> ItemContainer addItem(T item, CellGroup<T> cellGroup) {
+    public ItemContainer addItem(Object item, CellGroup cellGroup) {
         for (Map.Entry<CellCoordinate, CellDefinition> entry : cellGroup.getEntries()) {
             CellCoordinate coordinateInGroup = entry.getKey();
             CellDefinition cellDefinition = entry.getValue();
             CellCoordinate sheetCellCoordinate = this.getCursorCoordinate().plusCoordinate(coordinateInGroup);
-            ReadableValueReference<?> valueRef = cellDefinition.getValueRef();
-            if (valueRef instanceof ContextAwareValueReference) {
-                ((ContextAwareValueReference)valueRef).setContext(item);
+            ReadableValueReference valueRef = cellDefinition.getValueRef();
+            if (valueRef instanceof ContextAware) {
+                ((ContextAware)valueRef).setContext(item);
             }
             Object propertyValue = valueRef.getValue();
             setCellStyle(sheetCellCoordinate, item, cellDefinition.getCellStyleReference());
@@ -100,7 +100,7 @@ public class ItemContainer implements Rectangle {
         return this;
     }
 
-    public <T> ItemContainer readItem(T existingItem, CellGroup<T> cellGroup) {
+    public ItemContainer readItem(Object existingItem, CellGroup cellGroup) {
         for (Map.Entry<CellCoordinate, CellDefinition> entry : cellGroup.getEntries()) {
             CellCoordinate coordinateInGroup = entry.getKey();
             CellDefinition cellDefinition = entry.getValue();
@@ -137,8 +137,8 @@ public class ItemContainer implements Rectangle {
 
     private void setCellStyle(CellCoordinate cellCoordinate, Object item, CellStyleReference cellStyleReference) {
         if (cellStyleReference != null) {
-            if (cellStyleReference instanceof ContextAwareCellStyleRefence) {
-                ((ContextAwareCellStyleRefence)cellStyleReference).setContext(item);
+            if (cellStyleReference instanceof ContextAware) {
+                ((ContextAware)cellStyleReference).setContext(item);
             }
             CellStyle cellStyle = cellStyleReference.getCellStyle();
             if (cellStyle != null) {

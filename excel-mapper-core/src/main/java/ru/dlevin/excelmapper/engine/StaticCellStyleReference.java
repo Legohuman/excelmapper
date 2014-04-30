@@ -7,13 +7,13 @@ import org.apache.poi.ss.usermodel.CellStyle;
  * Date: 07.03.14
  */
 public class StaticCellStyleReference implements CellStyleReference {
-
     private final CellStyle cellStyle;
 
     public StaticCellStyleReference(CellStyle cellStyle) {
         this.cellStyle = cellStyle;
     }
 
+    @Override
     public CellStyle getCellStyle() {
         return cellStyle;
     }

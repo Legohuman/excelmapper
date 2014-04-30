@@ -6,7 +6,7 @@ import java.util.Map;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class MapPropertyValueReference extends PropertyValueReference<Object> {
+public class MapPropertyValueReference extends PropertyValueReference<Map, Object> {
     private Map<String, Object> map;
 
     public MapPropertyValueReference(String property) {
@@ -15,8 +15,13 @@ public class MapPropertyValueReference extends PropertyValueReference<Object> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void setContext(Object context) {
-        this.map = (Map)context;
+    public void setContext(Map context) {
+        this.map = context;
+    }
+
+    @Override
+    public Map getContext() {
+        return map;
     }
 
     @SuppressWarnings("unchecked")

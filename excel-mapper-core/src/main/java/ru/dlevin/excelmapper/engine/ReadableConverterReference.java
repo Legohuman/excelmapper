@@ -6,7 +6,7 @@ import ru.dlevin.excelmapper.engine.converters.Converter;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class ReadableConverterReference<S, D> implements ReadableValueReference<D>, ContextAwareValueReference {
+public class ReadableConverterReference<S, D, C> implements ReadableValueReference<D>, ContextAware<C> {
 
     private final ReadableValueReference<S> wrappedRef;
     private final Converter<S, D> converter;
@@ -28,9 +28,14 @@ public class ReadableConverterReference<S, D> implements ReadableValueReference<
     }
 
     @Override
-    public void setContext(Object context) {
-        if (wrappedRef instanceof ContextAwareValueReference) {
-            ((ContextAwareValueReference)wrappedRef).setContext(context);
+    public void setContext(C context) {
+        if (wrappedRef instanceof ContextAware) {
+            ((ContextAware<C>)wrappedRef).setContext(context);
         }
+    }
+
+    @Override
+    public C getContext() {
+        return (wrappedRef instanceof ContextAware) ? ((ContextAware<C>)wrappedRef).getContext() : null;
     }
 }

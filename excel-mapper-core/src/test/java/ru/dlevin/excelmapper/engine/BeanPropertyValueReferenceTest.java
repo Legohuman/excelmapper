@@ -21,15 +21,15 @@ public class BeanPropertyValueReferenceTest {
         PersonFactory personFactory = new PersonFactory();
         Person john = personFactory.getJohn();
         Person mike = personFactory.getMike();
-        BeanPropertyValueReference<Integer> ref = new BeanPropertyValueReference<Integer>("age");
+        BeanPropertyValueReference ref = new BeanPropertyValueReference("age");
         ref.setContext(john);
         assertEquals("age", ref.getProperty());
         assertEquals(int.class, ref.getType());
-        assertEquals(20, (int)ref.getValue());
+        assertEquals(20, (int)(Integer)ref.getValue());
         ref.setContext(mike);
         assertEquals("age", ref.getProperty());
         assertEquals(int.class, ref.getType());
-        assertEquals(42, (int)ref.getValue());
+        assertEquals(42, (int)(Integer)ref.getValue());
     }
 
     @Test
@@ -37,15 +37,15 @@ public class BeanPropertyValueReferenceTest {
         PersonFactory personFactory = new PersonFactory();
         Person john = personFactory.getJohn();
         Person mike = personFactory.getMike();
-        BeanPropertyValueReference<Integer> ref = new BeanPropertyValueReference<Integer>("age");
+        BeanPropertyValueReference ref = new BeanPropertyValueReference("age");
         ref.setContext(john);
         ref.setValue(25);
         assertEquals(int.class, ref.getType());
-        assertEquals(25, (int)ref.getValue());
+        assertEquals(25, (int)(Integer)ref.getValue());
         ref.setContext(mike);
         ref.setValue(45);
         assertEquals(int.class, ref.getType());
-        assertEquals(45, (int)ref.getValue());
+        assertEquals(45, (int)(Integer)ref.getValue());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BeanPropertyValueReferenceTest {
 
     private void testGetPropertyFromExceptionBean(String property) {
         ExceptionBean bean = new ExceptionBean();
-        BeanPropertyValueReference<String> ref = new BeanPropertyValueReference<String>(property);
+        BeanPropertyValueReference ref = new BeanPropertyValueReference(property);
         ref.setContext(bean);
         ref.getValue();
     }
@@ -123,7 +123,7 @@ public class BeanPropertyValueReferenceTest {
 
     private void testSetPropertyToExceptionBean(String property, String value) {
         ExceptionBean bean = new ExceptionBean();
-        BeanPropertyValueReference<String> ref = new BeanPropertyValueReference<String>(property);
+        BeanPropertyValueReference ref = new BeanPropertyValueReference(property);
         ref.setContext(bean);
         ref.setValue(value);
     }
@@ -132,7 +132,7 @@ public class BeanPropertyValueReferenceTest {
     public void testSetPropertyClassCastExceptionProperty() {
         PersonFactory personFactory = new PersonFactory();
         Person john = personFactory.getJohn();
-        BeanPropertyValueReference<String> ref = new BeanPropertyValueReference<String>("age");
+        BeanPropertyValueReference ref = new BeanPropertyValueReference("age");
         ref.setContext(john);
         ref.setValue("42");
     }
@@ -161,7 +161,7 @@ public class BeanPropertyValueReferenceTest {
 
     private void testGetPropertyTypeToExceptionBean(String property) {
         ExceptionBean bean = new ExceptionBean();
-        BeanPropertyValueReference<String> ref = new BeanPropertyValueReference<String>(property);
+        BeanPropertyValueReference ref = new BeanPropertyValueReference(property);
         ref.setContext(bean);
         ref.getType();
     }

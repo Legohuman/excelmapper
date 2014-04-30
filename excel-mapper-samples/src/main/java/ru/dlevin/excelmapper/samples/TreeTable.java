@@ -31,7 +31,7 @@ public class TreeTable {
             personGroup.addCells(CellDefinitions.fromReferences(property("name"), property("age")));
 
             CellGroup departmentGroup = new CellGroup();
-            departmentGroup.addCell(new CellCoordinate(0, 0), new CellDefinition(new BeanPropertyValueReference<String>("name")));
+            departmentGroup.addCell(new CellCoordinate(0, 0), new CellDefinition(new BeanPropertyValueReference("name")));
 
 
             Person p1 = new Person("John", "director", 40);
@@ -46,13 +46,14 @@ public class TreeTable {
             List<Department> departments = Arrays.asList(d1, d2);
             CellCoordinate containerOrigin = new CellCoordinate(0, 0);
             CompositeRectangle group = new CompositeRectangle();
+            ItemContainerFactory factory = new ItemContainerFactory();
 
             for (Department department : departments) {
                 ItemContainer departmentContainer =
-                    new ItemContainer(null, sheet, group.isEmpty() ? containerOrigin : group.getBottomLeftCorner().plusRow(1));
+                    factory.createItemContainer(sheet, group.isEmpty() ? containerOrigin : group.getBottomLeftCorner().plusRow(1));
                 group.add(departmentContainer);
                 departmentContainer.addItem(department, departmentGroup);
-                departmentContainer.setCursorCoordinate(departmentContainer.getCursorCoordinate().plusCoordinate(new CellCoordinate(1, 1)));
+                departmentContainer.setCursorCoordinate(departmentContainer.getCursorCoordinate().plusColumn(1));
                 departmentContainer.addItems(department.getPersons(), personGroup);
             }
 

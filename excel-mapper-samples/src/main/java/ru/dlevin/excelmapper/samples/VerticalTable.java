@@ -20,7 +20,7 @@ import static ru.dlevin.excelmapper.engine.References.value;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class SimpleTable {
+public class VerticalTable {
 
     public static void main(String[] args) throws IOException {
         FileOutputStream fileOut = null;
@@ -41,9 +41,10 @@ public class SimpleTable {
 
             CellGroup group = new CellGroup();
             group.addCells(CellDefinitions.fromReferences(property("name"), property("post")));
-            group.addCell(new CellDefinition(value("---"), null, 2, 1));
+            group.addCell(new CellDefinition(value("---"), 2, 1));
             group.addCell(property("age"));
-            ItemContainer container = new ItemContainer(null, sheet, new CellCoordinate(2, 2));
+            ItemContainerFactory factory = new ItemContainerFactory();
+            ItemContainer container = factory.createItemContainer(sheet, new CellCoordinate(2, 2));
             container.addItem(null, header);
             List<Person> items =
                 Arrays.asList(new Person("John", "director", 40), new Person("Mike", "secretary", 35), new Person("Adam", "engineer", 30));

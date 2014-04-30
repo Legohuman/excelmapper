@@ -18,7 +18,7 @@ import static ru.dlevin.excelmapper.engine.References.value;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class HorizontalOrientedTable {
+public class HorizontalTable {
 
     public static void main(String[] args) throws IOException {
         FileOutputStream fileOut = null;
@@ -32,7 +32,8 @@ public class HorizontalOrientedTable {
             group.addCells(CellDefinitions
                 .fromReferences(property("name"), property("post"), property("age"),
                     value("---")));
-            ItemContainer container = new ItemContainer(null, sheet, new CellCoordinate(2, 2), MovementDirection.RIGHT);
+            ItemContainerFactory factory = new ItemContainerFactory();
+            ItemContainer container = factory.createItemContainer(sheet, new CellCoordinate(2, 2), MovementDirection.RIGHT);
             List<Person> items =
                 Arrays.asList(new Person("John", "director", 40), new Person("Mike", "secretary", 35), new Person("Adam", "engineer", 30));
             container.addItems(items, group);

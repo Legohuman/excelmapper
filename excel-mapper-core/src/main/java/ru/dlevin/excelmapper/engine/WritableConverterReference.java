@@ -6,7 +6,7 @@ import ru.dlevin.excelmapper.engine.converters.Converter;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class WritableConverterReference<S, D> implements WritableValueReference<D>, ContextAwareValueReference {
+public class WritableConverterReference<S, D, C> implements WritableValueReference<D>, ContextAware<C> {
 
     private final WritableValueReference<S> wrappedRef;
     private final Converter<S, D> converter;
@@ -15,11 +15,6 @@ public class WritableConverterReference<S, D> implements WritableValueReference<
         Converter<S, D> converter) {
         this.wrappedRef = wrappedRef;
         this.converter = converter;
-    }
-
-    @Override
-    public D getValue() {
-        return converter.convertTo(wrappedRef.getValue());
     }
 
     @Override
@@ -33,9 +28,14 @@ public class WritableConverterReference<S, D> implements WritableValueReference<
     }
 
     @Override
-    public void setContext(Object context) {
-        if (wrappedRef instanceof ContextAwareValueReference) {
-            ((ContextAwareValueReference)wrappedRef).setContext(context);
+    public void setContext(C context) {
+        if (wrappedRef instanceof ContextAware) {
+            ((ContextAware<C>)wrappedRef).setContext(context);
         }
+    }
+
+    @Override
+    public C getContext() {
+        return (wrappedRef instanceof ContextAware) ? ((ContextAware<C>)wrappedRef).getContext() : null;
     }
 }

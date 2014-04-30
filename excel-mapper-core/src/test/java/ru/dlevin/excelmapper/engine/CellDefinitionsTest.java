@@ -58,7 +58,7 @@ public class CellDefinitionsTest {
         CellDefinition def = iterator.next();
         assertNotNull(def);
         assertEquals(ref, def.getValueRef());
-        assertEquals(CellStyleReference.UNDEFINED, def.getCellStyleReference());
+        assertEquals(DynamicCellStyleReference.UNDEFINED, def.getCellStyleReference());
         assertEquals(1, def.getRowSpan());
         assertEquals(1, def.getColSpan());
     }
@@ -74,7 +74,7 @@ public class CellDefinitionsTest {
         CellDefinition def = iterator.next();
         assertNotNull(def);
         assertEquals(ref, def.getValueRef());
-        assertEquals(CellStyleReference.UNDEFINED, def.getCellStyleReference());
+        assertEquals(DynamicCellStyleReference.UNDEFINED, def.getCellStyleReference());
         assertEquals(1, def.getRowSpan());
         assertEquals(1, def.getColSpan());
     }

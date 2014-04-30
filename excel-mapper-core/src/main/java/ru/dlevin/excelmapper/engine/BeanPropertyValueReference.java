@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class BeanPropertyValueReference<T> extends PropertyValueReference<T> {
+public class BeanPropertyValueReference extends PropertyValueReference<Object, Object> {
 
     private Object bean;
 
@@ -24,13 +24,17 @@ public class BeanPropertyValueReference<T> extends PropertyValueReference<T> {
         this.bean = context;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public T getValue() {
+    public Object getContext() {
+        return bean;
+    }
+
+    @Override
+    public Object getValue() {
         String property = getProperty();
         try {
             Validate.notNull(bean, "Can not get property \"" + property + "\" value from null bean object.");
-            return (T)PropertyUtils.getProperty(bean, property);
+            return PropertyUtils.getProperty(bean, property);
         } catch (IllegalAccessException e) {
             handleException(property, e);
         } catch (InvocationTargetException e) {
@@ -42,7 +46,7 @@ public class BeanPropertyValueReference<T> extends PropertyValueReference<T> {
     }
 
     @Override
-    public void setValue(T value) {
+    public void setValue(Object value) {
         String property = getProperty();
         try {
             PropertyUtils.setProperty(bean, property, value);
@@ -59,7 +63,7 @@ public class BeanPropertyValueReference<T> extends PropertyValueReference<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<T> getType() {
+    public Class getType() {
         String property = getProperty();
         try {
             PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(bean, property);
@@ -67,7 +71,7 @@ public class BeanPropertyValueReference<T> extends PropertyValueReference<T> {
                 throw new EvaluationException("Can not evaluate property " + property + " of bean with class " + bean.getClass().getName() +
                     ". Property is not found.");
             }
-            return (Class<T>)propertyDescriptor.getPropertyType();
+            return propertyDescriptor.getPropertyType();
         } catch (IllegalAccessException e) {
             handleException(property, e);
         } catch (InvocationTargetException e) {

@@ -22,7 +22,7 @@ import static ru.dlevin.excelmapper.engine.References.*;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class TrainTable {
+public class DynamicRowsTable {
 
     public static void main(String[] args) throws IOException {
         FileOutputStream fileOut = null;
@@ -42,7 +42,7 @@ public class TrainTable {
 
             CellGroup singleTrainGroup = new CellGroup();
 
-            ReadableValueReference ref = converter(References.<Integer>property("infos[0].trainNumber"),
+            ReadableValueReference ref = converter((ReadableValueReference)References.property("infos[0].trainNumber"),
                 new ReverseConverter<Integer, Double>(new DoubleIntConverter()));
             singleTrainGroup.addCells(CellDefinitions
                 .fromReferences(ref, property("infos[0].fromStation"), property("infos[0].toStation"),
@@ -51,10 +51,10 @@ public class TrainTable {
             CellGroup twoTrainsGroup = new CellGroup();
             twoTrainsGroup.addCells(CellDefinitions
                 .fromReferences(property("infos[0].trainNumber"), property("infos[0].fromStation"), property("infos[0].toStation")));
-            twoTrainsGroup.addCell(new CellDefinition(property("note"), null, 1, 2));
+            twoTrainsGroup.addCell(new CellDefinition(property("note"), 1, 2));
             twoTrainsGroup.addCells(new CellCoordinate(0, 1), CellDefinitions
                 .fromReferences(property("infos[1].trainNumber"), property("infos[1].fromStation"), property("infos[1].toStation")));
-            twoTrainsGroup.addCell(new CellCoordinate(4, 0), new CellDefinition(References.property("date"), null, 1, 2));
+            twoTrainsGroup.addCell(new CellCoordinate(4, 0), new CellDefinition(References.property("date"), 1, 2));
 
             ItemContainerFactory containerFactory = new ItemContainerFactory();
             ItemContainer container = containerFactory.createItemContainer(sheet, new CellCoordinate(2, 2));

@@ -4,7 +4,9 @@ package ru.dlevin.excelmapper.engine;
  * User: Dmitry Levin
  * Date: 24.03.14
  */
-public interface ContextAwareValueReference {
+public interface ContextAware<C> {
 
-    void setContext(Object context);
+    void setContext(C context);
+
+    C getContext();
 }

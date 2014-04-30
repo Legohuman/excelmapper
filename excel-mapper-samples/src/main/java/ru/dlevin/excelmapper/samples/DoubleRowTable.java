@@ -3,10 +3,7 @@ package ru.dlevin.excelmapper.samples;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import ru.dlevin.excelmapper.engine.CellCoordinate;
-import ru.dlevin.excelmapper.engine.CellDefinitions;
-import ru.dlevin.excelmapper.engine.CellGroup;
-import ru.dlevin.excelmapper.engine.ItemContainer;
+import ru.dlevin.excelmapper.engine.*;
 import ru.dlevin.excelmapper.samples.domain.Person;
 
 import java.io.FileOutputStream;
@@ -33,7 +30,8 @@ public class DoubleRowTable {
             CellGroup group = new CellGroup();
             group.addCells(CellDefinitions.fromReferences(property("name"), property("post")));
             group.addCells(new CellCoordinate(0, 1), CellDefinitions.fromReferences(property("age"), value("---")));
-            ItemContainer container = new ItemContainer(null, sheet, new CellCoordinate(2, 2));
+            ItemContainerFactory factory = new ItemContainerFactory();
+            ItemContainer container = factory.createItemContainer(sheet, new CellCoordinate(2, 2));
             List<Person> items =
                 Arrays.asList(new Person("John", "director", 40), new Person("Mike", "secretary", 35), new Person("Adam", "engineer", 30));
             container.addItems(items, group);

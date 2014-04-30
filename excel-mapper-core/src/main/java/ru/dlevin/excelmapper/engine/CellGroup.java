@@ -8,7 +8,7 @@ import java.util.*;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class CellGroup<T> implements Rectangle {
+public class CellGroup implements Rectangle {
     private final Map<CellCoordinate, CellDefinition> cells = new HashMap<CellCoordinate, CellDefinition>();
 
     private CellStyleReference cellStyleReference = CellStyleReference.UNDEFINED;

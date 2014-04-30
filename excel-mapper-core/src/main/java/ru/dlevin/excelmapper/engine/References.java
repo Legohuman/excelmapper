@@ -8,20 +8,22 @@ import ru.dlevin.excelmapper.engine.converters.Converter;
  */
 public class References {
 
-    public static <T> BeanPropertyValueReference<T> property(String propertyName) {
-        return new BeanPropertyValueReference<T>(propertyName);
+    public static BeanPropertyValueReference property(String propertyName) {
+        return new BeanPropertyValueReference(propertyName);
     }
 
     public static <T> StaticValueReference<T> value(T value) {
         return new StaticValueReference<T>(value);
     }
 
-    public static <S, D> WritableConverterReference<S, D> converter(WritableValueReference<S> valueReference, Converter<S, D> converter) {
-        return new WritableConverterReference<S, D>(valueReference, converter);
+    public static <S, D, C> WritableConverterReference<S, D, C> converter(WritableValueReference<S> valueReference,
+        Converter<S, D> converter) {
+        return new WritableConverterReference<S, D, C>(valueReference, converter);
     }
 
-    public static <S, D> ReadableConverterReference<S, D> converter(ReadableValueReference<S> valueReference, Converter<S, D> converter) {
-        return new ReadableConverterReference<S, D>(valueReference, converter);
+    public static <S, D, C> ReadableConverterReference<S, D, C> converter(ReadableValueReference<S> valueReference,
+        Converter<S, D> converter) {
+        return new ReadableConverterReference<S, D, C>(valueReference, converter);
     }
 
     public static MapPropertyValueReference key(String key) {
