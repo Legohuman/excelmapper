@@ -3,12 +3,31 @@ package ru.dlevin.excelmapper.utils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import ru.dlevin.excelmapper.engine.CellCoordinate;
+import ru.dlevin.excelmapper.engine.CellRectangle;
+import ru.dlevin.excelmapper.engine.Rectangle;
 
 /**
  * User: Dmitry Levin
  * Date: 08.03.14
  */
 public class CellUtils {
+
+    public static boolean mergeRegionExists(Sheet sheet, Rectangle rectangle) {
+        for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
+            CellRangeAddress region = sheet.getMergedRegion(i);
+            CellCoordinate topLeftCorner = new CellCoordinate(region.getFirstColumn(), region.getFirstRow());
+            CellCoordinate bottomRightCorner = new CellCoordinate(region.getLastColumn(), region.getLastRow());
+            CellRectangle mergedRegionRectangle = new CellRectangle(topLeftCorner, bottomRightCorner);
+            if (rectangle.equals(mergedRegionRectangle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean cellExists(Sheet sheet, CellCoordinate cellCoordinate) {
+        return getCell(sheet, cellCoordinate, false) != null;
+    }
 
     public static void setValue(Sheet sheet, CellCoordinate cellCoordinate, Object value) {
         Cell cell = getCell(sheet, cellCoordinate, true);

@@ -6,7 +6,7 @@ import ru.dlevin.excelmapper.utils.Validate;
  * User: Dmitry Levin
  * Date: 14.03.14
  */
-public class Cursor {
+public class Cursor implements Postionable {
     private CellCoordinate startCoordinate;
     private CellCoordinate currentCoordinate;
     private MovementDirection direction;
@@ -23,23 +23,25 @@ public class Cursor {
         this(currentCoordinate, MovementDirection.DOWN);
     }
 
-    public MovementDirection getDirection() {
+    public MovementDirection getMovementDirection() {
         return direction;
     }
 
-    public void setDirection(MovementDirection direction) {
+    public Cursor setMovementDirection(MovementDirection direction) {
         this.direction = direction;
+        return this;
     }
 
     public CellCoordinate getCurrentCoordinate() {
         return currentCoordinate;
     }
 
-    public void setCurrentCoordinate(CellCoordinate currentCoordinate) {
+    public Cursor setCurrentCoordinate(CellCoordinate currentCoordinate) {
         this.currentCoordinate = currentCoordinate;
+        return this;
     }
 
-    public void moveBy(Rectangle rectangle) {
+    public Cursor moveBy(Rectangle rectangle) {
         if (MovementDirection.DOWN.equals(direction)) {
             currentCoordinate = currentCoordinate.plusRow(rectangle.getRowCount());
         } else if (MovementDirection.RIGHT.equals(direction)) {
@@ -49,65 +51,81 @@ public class Cursor {
         } else if (MovementDirection.LEFT.equals(direction)) {
             currentCoordinate = currentCoordinate.minusColumn(rectangle.getColumnCount());
         }
+        return this;
     }
 
-    public void plusColumn(int column) {
+    public Cursor plusColumn(int column) {
         currentCoordinate = currentCoordinate.plusColumn(column);
+        return this;
     }
 
-    public void plusRow(int row) {
+    public Cursor plusRow(int row) {
         currentCoordinate = currentCoordinate.plusRow(row);
+        return this;
     }
 
-    public void minusColumn(int column) {
+    public Cursor minusColumn(int column) {
         currentCoordinate = currentCoordinate.minusColumn(column);
+        return this;
     }
 
-    public void minusRow(int row) {
+    public Cursor minusRow(int row) {
         currentCoordinate = currentCoordinate.minusRow(row);
+        return this;
     }
 
-    public void nextColumn() {
+    public Cursor nextColumn() {
         currentCoordinate = currentCoordinate.nextColumn();
+        return this;
     }
 
-    public void nextRow() {
+    public Cursor nextRow() {
         currentCoordinate = currentCoordinate.nextRow();
+        return this;
     }
 
-    public void prevColumn() {
+    public Cursor prevColumn() {
         currentCoordinate = currentCoordinate.prevColumn();
+        return this;
     }
 
-    public void prevRow() {
+    public Cursor prevRow() {
         currentCoordinate = currentCoordinate.prevRow();
+        return this;
     }
 
-    public void plusCoordinate(CellCoordinate coordinate) {
+    public Cursor plusCoordinate(CellCoordinate coordinate) {
         currentCoordinate = currentCoordinate.plusCoordinate(coordinate);
+        return this;
     }
 
-    public void minusCoordinate(CellCoordinate coordinate) {
+    public Cursor minusCoordinate(CellCoordinate coordinate) {
         currentCoordinate = currentCoordinate.minusCoordinate(coordinate);
+        return this;
     }
 
-    public void plusCoordinate(int column, int row) {
+    public Cursor plusCoordinate(int column, int row) {
         currentCoordinate = currentCoordinate.plusCoordinate(column, row);
+        return this;
     }
 
-    public void minusCoordinate(int column, int row) {
+    public Cursor minusCoordinate(int column, int row) {
         currentCoordinate = currentCoordinate.minusCoordinate(column, row);
+        return this;
     }
 
-    public void resetColumn() {
+    public Cursor resetColumn() {
         currentCoordinate = new CellCoordinate(startCoordinate.getColumn(), currentCoordinate.getRow());
+        return this;
     }
 
-    public void resetRow() {
+    public Cursor resetRow() {
         currentCoordinate = new CellCoordinate(currentCoordinate.getColumn(), startCoordinate.getRow());
+        return this;
     }
 
-    public void resetCoordinate() {
+    public Cursor resetCoordinate() {
         currentCoordinate = new CellCoordinate(startCoordinate);
+        return this;
     }
 }

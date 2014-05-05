@@ -12,35 +12,35 @@ public class CellDefinition<T> implements Rectangle {
     public static final int DEFAULT_ROW_SPAN = 1;
     public static final int DEFAULT_COL_SPAN = 1;
 
-    private ReadableValueReference<T> valueRef;
+    private ValueReference<T> valueRef;
     private CellStyleReference cellStyleReference = DEFAULT_CELL_STYLE_REF;
     private int rowSpan = DEFAULT_ROW_SPAN;
     private int colSpan = DEFAULT_COL_SPAN;
 
-    public CellDefinition(ReadableValueReference<T> valueRef) {
+    public CellDefinition(ValueReference<T> valueRef) {
         this(valueRef, DEFAULT_CELL_STYLE_REF);
     }
 
-    public CellDefinition(ReadableValueReference<T> valueRef, CellStyleReference cellStyleReference) {
+    public CellDefinition(ValueReference<T> valueRef, CellStyleReference cellStyleReference) {
         this(valueRef, cellStyleReference, DEFAULT_COL_SPAN, DEFAULT_ROW_SPAN);
     }
 
-    public CellDefinition(ReadableValueReference<T> valueRef, int colSpan, int rowSpan) {
+    public CellDefinition(ValueReference<T> valueRef, int colSpan, int rowSpan) {
         this(valueRef, DEFAULT_CELL_STYLE_REF, colSpan, rowSpan);
     }
 
-    public CellDefinition(ReadableValueReference<T> valueRef, CellStyleReference cellStyleReference, int colSpan, int rowSpan) {
+    public CellDefinition(ValueReference<T> valueRef, CellStyleReference cellStyleReference, int colSpan, int rowSpan) {
         setValueRef(valueRef);
         setCellStyleReference(cellStyleReference);
         setRowSpan(rowSpan);
         setColSpan(colSpan);
     }
 
-    public ReadableValueReference<T> getValueRef() {
+    public ValueReference<T> getValueRef() {
         return valueRef;
     }
 
-    public void setValueRef(ReadableValueReference<T> valueRef) {
+    public void setValueRef(ValueReference<T> valueRef) {
         Validate.notNull(valueRef, "Can not set null value reference for cell definition.");
         this.valueRef = valueRef;
     }
@@ -72,7 +72,7 @@ public class CellDefinition<T> implements Rectangle {
         this.colSpan = colSpan;
     }
 
-    public CellDefinition withValue(ReadableValueReference<?> valueRef) {
+    public CellDefinition withValue(ValueReference<?> valueRef) {
         return new CellDefinition(valueRef, this.cellStyleReference, this.colSpan, this.rowSpan);
     }
 

@@ -4,8 +4,8 @@ package ru.dlevin.excelmapper.engine;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public abstract class AbstractContextAwareValueReference<C, T>
-    implements ReadableValueReference<T>, WritableValueReference<T>, ContextAware<C> {
+public abstract class AbstractContextAwareValueReference<C, T> extends AbstractProcessMessagesHolderAware
+    implements ValueReference<T>, ContextAware<C> {
 
     private C context;
 

@@ -16,14 +16,9 @@ public class References {
         return new StaticValueReference<T>(value);
     }
 
-    public static <S, D, C> WritableConverterReference<S, D, C> converter(WritableValueReference<S> valueReference,
+    public static <S, D, C> ConverterReference<S, D, C> converter(ValueReference<S> valueReference,
         Converter<S, D> converter) {
-        return new WritableConverterReference<S, D, C>(valueReference, converter);
-    }
-
-    public static <S, D, C> ReadableConverterReference<S, D, C> converter(ReadableValueReference<S> valueReference,
-        Converter<S, D> converter) {
-        return new ReadableConverterReference<S, D, C>(valueReference, converter);
+        return new ConverterReference<S, D, C>(valueReference, converter);
     }
 
     public static MapPropertyValueReference key(String key) {

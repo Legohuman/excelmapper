@@ -25,11 +25,11 @@ public class CellGroup implements Rectangle {
     }
 
     public MovementDirection getCursorMovementDirection() {
-        return cursor.getDirection();
+        return cursor.getMovementDirection();
     }
 
     public CellGroup setCursorMovementDirection(MovementDirection cursorMovementDirection) {
-        cursor.setDirection(cursorMovementDirection);
+        cursor.setMovementDirection(cursorMovementDirection);
         return this;
     }
 
@@ -77,11 +77,11 @@ public class CellGroup implements Rectangle {
         return this.addCell(null, cellDefinition);
     }
 
-    public CellGroup addCell(CellCoordinate coordinate, ReadableValueReference reference) {
+    public CellGroup addCell(CellCoordinate coordinate, ValueReference reference) {
         return this.addCell(coordinate, new CellDefinition(reference));
     }
 
-    public CellGroup addCell(ReadableValueReference reference) {
+    public CellGroup addCell(ValueReference reference) {
         return this.addCell(new CellDefinition(reference));
     }
 
@@ -100,30 +100,36 @@ public class CellGroup implements Rectangle {
     }
 
     @Nullable
+    @Override
     public CellCoordinate getTopLeftCorner() {
         return rectangle == null ? null : rectangle.getTopLeftCorner();
     }
 
 
     @Nullable
+    @Override
     public CellCoordinate getTopRightCorner() {
         return rectangle == null ? null : rectangle.getTopRightCorner();
     }
 
     @Nullable
+    @Override
     public CellCoordinate getBottomLeftCorner() {
         return rectangle == null ? null : rectangle.getBottomLeftCorner();
     }
 
     @Nullable
+    @Override
     public CellCoordinate getBottomRightCorner() {
         return rectangle == null ? null : rectangle.getBottomRightCorner();
     }
 
+    @Override
     public int getRowCount() {
         return rectangle == null ? 0 : rectangle.getRowCount();
     }
 
+    @Override
     public int getColumnCount() {
         return rectangle == null ? 0 : rectangle.getColumnCount();
     }

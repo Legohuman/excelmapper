@@ -11,7 +11,7 @@ import java.util.Map;
  * User: Dmitry Levin
  * Date: 08.03.14
  */
-public class ItemContainer implements Rectangle {
+public class ItemContainer implements Rectangle, Postionable {
 
     private Cursor cursor;
     private CellRectangle rectangle;
@@ -40,18 +40,22 @@ public class ItemContainer implements Rectangle {
         this.rectangle = new CellRectangle(origin, origin);
     }
 
+    @Override
     public CellCoordinate getTopLeftCorner() {
         return rectangle.getTopLeftCorner();
     }
 
+    @Override
     public CellCoordinate getTopRightCorner() {
         return rectangle.getTopRightCorner();
     }
 
+    @Override
     public CellCoordinate getBottomLeftCorner() {
         return rectangle.getBottomLeftCorner();
     }
 
+    @Override
     public CellCoordinate getBottomRightCorner() {
         return rectangle.getBottomRightCorner();
     }
@@ -66,20 +70,130 @@ public class ItemContainer implements Rectangle {
         return rectangle.getColumnCount();
     }
 
-    public void setCursorCoordinate(CellCoordinate cursorCoordinate) {
+    @Override
+    public ItemContainer setCurrentCoordinate(CellCoordinate cursorCoordinate) {
         cursor.setCurrentCoordinate(cursorCoordinate);
+        return this;
     }
 
-    public CellCoordinate getCursorCoordinate() {
+    @Override
+    public CellCoordinate getCurrentCoordinate() {
         return cursor.getCurrentCoordinate();
+    }
+
+    @Override
+    public MovementDirection getMovementDirection() {
+        return cursor.getMovementDirection();
+    }
+
+    @Override
+    public ItemContainer setMovementDirection(MovementDirection direction) {
+        cursor.setMovementDirection(direction);
+        return this;
+    }
+
+    @Override
+    public ItemContainer moveBy(Rectangle rectangle) {
+        cursor.moveBy(rectangle);
+        return this;
+    }
+
+    @Override
+    public ItemContainer plusColumn(int column) {
+        cursor.plusColumn(column);
+        return this;
+    }
+
+    @Override
+    public ItemContainer plusRow(int row) {
+        cursor.plusRow(row);
+        return this;
+    }
+
+    @Override
+    public ItemContainer minusColumn(int column) {
+        cursor.minusColumn(column);
+        return this;
+    }
+
+    @Override
+    public ItemContainer minusRow(int row) {
+        cursor.minusRow(row);
+        return this;
+    }
+
+    @Override
+    public ItemContainer nextColumn() {
+        cursor.nextColumn();
+        return this;
+    }
+
+    @Override
+    public ItemContainer nextRow() {
+        cursor.nextRow();
+        return this;
+    }
+
+    @Override
+    public ItemContainer prevColumn() {
+        cursor.prevColumn();
+        return this;
+    }
+
+    @Override
+    public ItemContainer prevRow() {
+        cursor.prevColumn();
+        return this;
+    }
+
+    @Override
+    public ItemContainer plusCoordinate(CellCoordinate coordinate) {
+        cursor.plusCoordinate(coordinate);
+        return this;
+    }
+
+    @Override
+    public ItemContainer minusCoordinate(CellCoordinate coordinate) {
+        cursor.minusCoordinate(coordinate);
+        return this;
+    }
+
+    @Override
+    public ItemContainer plusCoordinate(int column, int row) {
+        cursor.plusCoordinate(column, row);
+        return this;
+    }
+
+    @Override
+    public ItemContainer minusCoordinate(int column, int row) {
+        cursor.minusCoordinate(column, row);
+        return this;
+    }
+
+    @Override
+    public ItemContainer resetColumn() {
+        cursor.resetColumn();
+        return this;
+    }
+
+    @Override
+    public ItemContainer resetRow() {
+        cursor.resetRow();
+        return this;
+    }
+
+    @Override
+    public ItemContainer resetCoordinate() {
+        cursor.resetCoordinate();
+        return this;
     }
 
     public ItemContainer addItem(Object item, CellGroup cellGroup) {
         for (Map.Entry<CellCoordinate, CellDefinition> entry : cellGroup.getEntries()) {
             CellCoordinate coordinateInGroup = entry.getKey();
             CellDefinition cellDefinition = entry.getValue();
-            CellCoordinate sheetCellCoordinate = this.getCursorCoordinate().plusCoordinate(coordinateInGroup);
-            ReadableValueReference valueRef = cellDefinition.getValueRef();
+            CellCoordinate sheetCellCoordinate = this.getCurrentCoordinate().plusCoordinate(coordinateInGroup);
+            ValueReference valueRef = cellDefinition.getValueRef();
             if (valueRef instanceof ContextAware) {
                 ((ContextAware)valueRef).setContext(item);
             }
@@ -100,17 +214,49 @@ public class ItemContainer implements Rectangle {
         return this;
     }
 
-    public ItemContainer readItem(Object existingItem, CellGroup cellGroup) {
+    public boolean containsAnyCellGroupCell(CellGroup cellGroup) {
+        for (CellCoordinate coordinateInGroup : cellGroup.getCoordinates()) {
+            CellCoordinate sheetCellCoordinate = this.getCurrentCoordinate().plusCoordinate(coordinateInGroup);
+            if (CellUtils.cellExists(sheet, sheetCellCoordinate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsAllCellGroupCells(CellGroup cellGroup) {
+        for (CellCoordinate coordinateInGroup : cellGroup.getCoordinates()) {
+            CellCoordinate sheetCellCoordinate = this.getCurrentCoordinate().plusCoordinate(coordinateInGroup);
+            if (!CellUtils.cellExists(sheet, sheetCellCoordinate)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean containsAllCellGroupMergeRegions(CellGroup cellGroup) {
+        for (CellDefinition cellDefinition : cellGroup.getCellDefinitions()) {
+            CellRectangle sheetRectangle = new CellRectangle(cellDefinition);
+            sheetRectangle.moveBy(this.getCurrentCoordinate());
+            if (!CellUtils.mergeRegionExists(sheet, sheetRectangle)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ItemContainer readItem(Object existingItem, CellGroup cellGroup, ProcessMessagesHolder messagesHolder) {
         for (Map.Entry<CellCoordinate, CellDefinition> entry : cellGroup.getEntries()) {
             CellCoordinate coordinateInGroup = entry.getKey();
             CellDefinition cellDefinition = entry.getValue();
-            CellCoordinate sheetCellCoordinate = this.getCursorCoordinate().plusCoordinate(coordinateInGroup);
-            ReadableValueReference<?> valueRef = cellDefinition.getValueRef();
-            if (valueRef instanceof WritableValueReference) {
-                if (valueRef instanceof PropertyValueReference) {
-                    ((PropertyValueReference)valueRef).setContext(existingItem);
-                }
-                ((WritableValueReference)valueRef).setValue(conversionEngine.convert(valueRef.getType(), getCellValue(
+            CellCoordinate sheetCellCoordinate = this.getCurrentCoordinate().plusCoordinate(coordinateInGroup);
+            ValueReference valueRef = cellDefinition.getValueRef();
+            if (valueRef instanceof ProcessMessagesHolderAware && messagesHolder != null) {
+                ((ProcessMessagesHolderAware)valueRef).setMessageHolder(messagesHolder);
+            }
+            if (valueRef instanceof ContextAware) {
+                ((ContextAware)valueRef).setContext(existingItem);
+                valueRef.setValue(conversionEngine.convert(valueRef.getType(), getCellValue(
                     sheetCellCoordinate)));
             }
         }
@@ -121,7 +267,7 @@ public class ItemContainer implements Rectangle {
     public <T> T readItem(Class<T> itemClass, CellGroup cellGroup) {
         try {
             T item = itemClass.newInstance();
-            readItem(item, cellGroup);
+            readItem(item, cellGroup, null);
             return item;
         } catch (InstantiationException e) {
             handleItemCreationException(itemClass, e);

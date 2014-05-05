@@ -42,7 +42,7 @@ public class DynamicRowsTable {
 
             CellGroup singleTrainGroup = new CellGroup();
 
-            ReadableValueReference ref = converter((ReadableValueReference)References.property("infos[0].trainNumber"),
+            ValueReference ref = converter((ValueReference)References.property("infos[0].trainNumber"),
                 new ReverseConverter<Integer, Double>(new DoubleIntConverter()));
             singleTrainGroup.addCells(CellDefinitions
                 .fromReferences(ref, property("infos[0].fromStation"), property("infos[0].toStation"),
@@ -79,7 +79,7 @@ public class DynamicRowsTable {
 
             List<RouteRequestInfo> existingTrainInfo = Collections.singletonList(new RouteRequestInfo(0, null, null));
             RouteRequest existingTrain = new RouteRequest(existingTrainInfo, null, new GregorianCalendar(2012, 1, 1, 1, 11, 11).getTime());
-            container2.readItem(existingTrain, singleTrainGroup);
+            container2.readItem(existingTrain, singleTrainGroup, ProcessMessagesHolder.NOP);
             System.out.println(existingTrain);
         } finally {
             if (fileOut != null) {

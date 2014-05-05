@@ -76,4 +76,16 @@ public class Issue {
     public void setAsignee(String asignee) {
         this.asignee = asignee;
     }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+            "number=" + number +
+            ", type=" + type +
+            ", importance=" + importance +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", asignee='" + asignee + '\'' +
+            '}';
+    }
 }

@@ -40,14 +40,14 @@ public class CellDefinitions implements Collection<CellDefinition> {
         this(cellStyleReference, Arrays.asList(cellDefinitions));
     }
 
-    public static CellDefinitions fromReferences(Collection<ReadableValueReference<?>> references) {
+    public static CellDefinitions fromReferences(Collection<ValueReference<?>> references) {
         CellDefinitions definitions = new CellDefinitions();
         definitions.addReferences(references);
         return definitions;
     }
 
-    public static CellDefinitions fromReferences(ReadableValueReference... references) {
-        Collection<ReadableValueReference<?>> refs = Arrays.<ReadableValueReference<?>>asList(references);
+    public static CellDefinitions fromReferences(ValueReference... references) {
+        Collection<ValueReference<?>> refs = Arrays.<ValueReference<?>>asList(references);
         return fromReferences(refs);
     }
 
@@ -97,7 +97,7 @@ public class CellDefinitions implements Collection<CellDefinition> {
         return cellDefinitions.add(cellDefinition);
     }
 
-    public boolean add(ReadableValueReference reference) {
+    public boolean add(ValueReference reference) {
         Validate.notNull(reference, "Can not add null value reference to definition list");
         CellDefinition cellDefinition = new CellDefinition(reference);
         applyCellStyleIfNotSet(cellDefinition);
@@ -130,15 +130,15 @@ public class CellDefinitions implements Collection<CellDefinition> {
         return cellDefinitions.addAll(c);
     }
 
-    public boolean addReferences(ReadableValueReference... references) {
-        Collection<ReadableValueReference<?>> refs = Arrays.<ReadableValueReference<?>>asList(references);
+    public boolean addReferences(ValueReference... references) {
+        Collection<ValueReference<?>> refs = Arrays.<ValueReference<?>>asList(references);
         return addReferences(refs);
     }
 
-    public boolean addReferences(Collection<? extends ReadableValueReference> c) {
+    public boolean addReferences(Collection<? extends ValueReference> c) {
         Validate.notNull(c, "Can not add null collection of value references to definition list");
         List<CellDefinition> definitions = new ArrayList<CellDefinition>(c.size());
-        for (ReadableValueReference reference : c) {
+        for (ValueReference reference : c) {
             Validate.notNull(reference, "Can not add null value reference to definition list");
             CellDefinition cellDefinition = new CellDefinition(reference);
             applyCellStyleIfNotSet(cellDefinition);

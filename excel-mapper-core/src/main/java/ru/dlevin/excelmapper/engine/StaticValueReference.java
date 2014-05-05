@@ -4,7 +4,7 @@ package ru.dlevin.excelmapper.engine;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class StaticValueReference<T> implements ReadableValueReference<T> {
+public class StaticValueReference<T> implements ValueReference<T> {
 
     private final T value;
 
@@ -14,6 +14,11 @@ public class StaticValueReference<T> implements ReadableValueReference<T> {
 
     public T getValue() {
         return value;
+    }
+
+    @Override
+    public void setValue(T value) {
+        //no operation
     }
 
     @SuppressWarnings("unchecked")

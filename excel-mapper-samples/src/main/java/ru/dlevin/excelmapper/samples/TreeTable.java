@@ -53,7 +53,7 @@ public class TreeTable {
                     factory.createItemContainer(sheet, group.isEmpty() ? containerOrigin : group.getBottomLeftCorner().plusRow(1));
                 group.add(departmentContainer);
                 departmentContainer.addItem(department, departmentGroup);
-                departmentContainer.setCursorCoordinate(departmentContainer.getCursorCoordinate().plusColumn(1));
+                departmentContainer.setCurrentCoordinate(departmentContainer.getCurrentCoordinate().plusColumn(1));
                 departmentContainer.addItems(department.getPersons(), personGroup);
             }
 

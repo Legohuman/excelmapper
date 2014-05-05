@@ -4,7 +4,9 @@ package ru.dlevin.excelmapper.engine;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public interface WritableValueReference<T> {
+public interface ValueReference<T> {
+
+    T getValue();
 
     void setValue(T value);
 

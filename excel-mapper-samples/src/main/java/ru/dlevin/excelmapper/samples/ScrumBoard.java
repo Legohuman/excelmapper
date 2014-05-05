@@ -82,12 +82,12 @@ public class ScrumBoard {
                     Arrays.asList(new Issue(1, IssueType.BUG, Importance.MINOR, "Issue 1", "Small ui bug", "John"),
                         new Issue(2, IssueType.BUG, Importance.MAJOR, "Issue 2", "Small ui bug2", "John"),
                         new Issue(3, IssueType.BUG, Importance.CRITICAL, "Issue 3", "Small ui bug3", "John")), ticketGroup);
-                ticketsContainer.setCursorCoordinate(ticketsContainer.getTopRightCorner().nextColumn());
+                ticketsContainer.setCurrentCoordinate(ticketsContainer.getTopRightCorner().nextColumn());
                 ticketsContainer
                     .addItems(Arrays.asList(new Issue(4, IssueType.BUG, Importance.BLOCKER, "Issue 4", "Small ui bug4", "John"),
                         new Issue(5, IssueType.BUG, null, "Issue 5", "Small ui bug5", "John")), ticketGroup);
 
-                ticketsContainer.setCursorCoordinate(ticketsContainer.getTopRightCorner().nextColumn());
+                ticketsContainer.setCurrentCoordinate(ticketsContainer.getTopRightCorner().nextColumn());
                 ticketsContainer
                     .addItems(Arrays.asList(new Issue(6, IssueType.BUG, Importance.CRITICAL, "Issue 6", "Critical bug", "John")),
                         ticketGroup);
@@ -148,7 +148,7 @@ public class ScrumBoard {
         return cellStyle;
     }
 
-    private static class IssueNumberAndTypeValueReference extends AbstractContextAwareReadableValueReference<Issue, String> {
+    private static class IssueNumberAndTypeValueReference extends ContextAwareValueReference<Issue, String> {
         @Override
         public String getValue() {
             Issue issue = getContext();

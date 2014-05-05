@@ -50,7 +50,7 @@ public class CellDefinitionsTest {
     @Test
     public void testCreationFromReferencesCollection() {
         StaticValueReference<Integer> ref = new StaticValueReference<Integer>(1);
-        CellDefinitions defs = CellDefinitions.fromReferences(Arrays.<ReadableValueReference<?>>asList(ref));
+        CellDefinitions defs = CellDefinitions.fromReferences(Arrays.<ValueReference<?>>asList(ref));
         assertEquals(1, defs.size());
         assertFalse(defs.isEmpty());
         Iterator<CellDefinition> iterator = defs.iterator();
@@ -162,7 +162,7 @@ public class CellDefinitionsTest {
     public void testAddReferencesCollection() {
         StaticValueReference<Integer> ref = new StaticValueReference<Integer>(1);
         CellDefinitions defs = new CellDefinitions();
-        defs.addReferences(Arrays.<ReadableValueReference<?>>asList(ref));
+        defs.addReferences(Arrays.<ValueReference<?>>asList(ref));
         assertEquals(1, defs.size());
         assertFalse(defs.isEmpty());
         Iterator<CellDefinition> iterator = defs.iterator();

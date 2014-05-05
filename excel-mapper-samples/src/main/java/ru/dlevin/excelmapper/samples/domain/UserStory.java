@@ -21,4 +21,11 @@ public class UserStory {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "UserStory{" +
+            "name='" + name + '\'' +
+            '}';
+    }
 }

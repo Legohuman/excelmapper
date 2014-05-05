@@ -6,12 +6,12 @@ import ru.dlevin.excelmapper.engine.converters.Converter;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class ReadableConverterReference<S, D, C> implements ReadableValueReference<D>, ContextAware<C> {
+public class ConverterReference<S, D, C> extends AbstractProcessMessagesHolderAware implements ValueReference<D>, ContextAware<C> {
 
-    private final ReadableValueReference<S> wrappedRef;
+    private final ValueReference<S> wrappedRef;
     private final Converter<S, D> converter;
 
-    protected ReadableConverterReference(ReadableValueReference<S> wrappedRef,
+    protected ConverterReference(ValueReference<S> wrappedRef,
         Converter<S, D> converter) {
         this.wrappedRef = wrappedRef;
         this.converter = converter;
@@ -20,6 +20,11 @@ public class ReadableConverterReference<S, D, C> implements ReadableValueReferen
     @Override
     public D getValue() {
         return converter.convertTo(wrappedRef.getValue());
+    }
+
+    @Override
+    public void setValue(D value) {
+        wrappedRef.setValue(converter.convertFrom(value));
     }
 
     @Override
