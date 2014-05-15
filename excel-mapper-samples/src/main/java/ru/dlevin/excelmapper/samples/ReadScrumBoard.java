@@ -23,7 +23,7 @@ public class ReadScrumBoard {
         File fileInput = new File("scrum-board.xls");
         Workbook wb = WorkbookFactory.create(fileInput);
 
-        Sheet sheet = wb.createSheet();
+        Sheet sheet = wb.getSheetAt(0);
         CellGroup userStoryGroup = new CellGroup()
             .addCell(new CellDefinition(property("name"), 6, 1));
 
@@ -40,25 +40,26 @@ public class ReadScrumBoard {
 
         CompositeRectangle containerGroup = new CompositeRectangle();
         ItemContainerFactory factory = new ItemContainerFactory();
+        ProcessMessagesHolder messagesHolder = new SimpleProcessMessagesHolder();
+
+        ItemContainer userStoryContainer = factory.createItemContainer(sheet, CellCoordinate.ZERO);
+        containerGroup.add(userStoryContainer);
+
+        UserStory userStory = new UserStory();
+        userStoryContainer.readItem(userStory, userStoryGroup, messagesHolder);
+        System.out.println(userStory);
+        ItemContainer ticketsContainer = factory.createItemContainer(sheet,
+            containerGroup.getBottomLeftCorner().plusRow(2));
+        containerGroup.add(ticketsContainer);
 
         for (int i = 0; i < 3; i++) {
-            ItemContainer userStoryContainer = factory.createItemContainer(sheet, CellCoordinate.ZERO);
-            containerGroup.add(userStoryContainer);
-
-            UserStory userStory = new UserStory();
-            System.out.println(userStory);
-            userStoryContainer.readItem(userStory, userStoryGroup, ProcessMessagesHolder.NOP);
-            ItemContainer ticketsContainer = factory.createItemContainer(sheet,
-                containerGroup.getBottomLeftCorner().plusRow(1));
-            containerGroup.add(ticketsContainer);
-
             Issue issue = new Issue();
-            ticketsContainer.readItem(issue, ticketGroup, ProcessMessagesHolder.NOP);
+            ticketsContainer.readItem(issue, ticketGroup, messagesHolder);
             System.out.println(issue);
-            ticketsContainer.readItem(issue, ticketGroup, ProcessMessagesHolder.NOP);
-            ticketsContainer.readItem(issue, ticketGroup, ProcessMessagesHolder.NOP);
-            ticketsContainer.readItem(issue, ticketGroup, ProcessMessagesHolder.NOP);
-            ticketsContainer.setCurrentCoordinate(ticketsContainer.getTopRightCorner().nextColumn());
+        }
+
+        for (int i = 0; i < messagesHolder.count(); i++) {
+            System.out.println(messagesHolder.get(i));
         }
     }
 
@@ -73,6 +74,11 @@ public class ReadScrumBoard {
             Issue issue = getContext();
             issue.setNumber(number);
             issue.setType(type);
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
         }
     }
 }

@@ -256,18 +256,27 @@ public class ItemContainer implements Rectangle, Postionable {
             }
             if (valueRef instanceof ContextAware) {
                 ((ContextAware)valueRef).setContext(existingItem);
-                valueRef.setValue(conversionEngine.convert(valueRef.getType(), getCellValue(
-                    sheetCellCoordinate)));
+                try {
+                    valueRef.setValue(conversionEngine.convert(valueRef.getType(), getCellValue(
+                        sheetCellCoordinate)));
+                } catch (Exception e) {
+                    if (messagesHolder != null) {
+                        messagesHolder.add(
+                            new ProcessMessage(ProcessMessageType.ERROR, sheetCellCoordinate, existingItem, valueRef, e, "")
+                        );
+                    }
+                    //todo think out logic without message holder
+                }
             }
         }
         this.cellGroupAdded(cellGroup);
         return this;
     }
 
-    public <T> T readItem(Class<T> itemClass, CellGroup cellGroup) {
+    public <T> T readItem(Class<T> itemClass, CellGroup cellGroup, ProcessMessagesHolder messagesHolder) {
         try {
             T item = itemClass.newInstance();
-            readItem(item, cellGroup, null);
+            readItem(item, cellGroup, messagesHolder);
             return item;
         } catch (InstantiationException e) {
             handleItemCreationException(itemClass, e);

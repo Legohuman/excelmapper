@@ -154,6 +154,11 @@ public class ScrumBoard {
             Issue issue = getContext();
             return issue.getNumber() + " " + issue.getType();
         }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
     }
 
     private static class ImportanceStyleReference extends ContextAwareCellStyleRefence<Importance, Issue> {

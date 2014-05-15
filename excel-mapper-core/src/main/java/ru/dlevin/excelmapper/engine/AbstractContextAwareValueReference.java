@@ -19,10 +19,4 @@ public abstract class AbstractContextAwareValueReference<C, T> extends AbstractP
     public C getContext() {
         return context;
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class getType() {
-        return context.getClass();
-    }
 }

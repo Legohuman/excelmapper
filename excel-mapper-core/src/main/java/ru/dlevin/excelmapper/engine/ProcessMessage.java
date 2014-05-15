@@ -11,7 +11,7 @@ public class ProcessMessage {
 
     private Object context;
 
-    private String property;
+    private ValueReference valueReference;
 
     private Exception exception;
 
@@ -20,12 +20,13 @@ public class ProcessMessage {
     public ProcessMessage() {
     }
 
-    public ProcessMessage(ProcessMessageType messageType, CellCoordinate coordinate, Object context, String property, Exception exception,
+    public ProcessMessage(ProcessMessageType messageType, CellCoordinate coordinate, Object context, ValueReference valueReference,
+        Exception exception,
         String description) {
         this.messageType = messageType;
         this.coordinate = coordinate;
         this.context = context;
-        this.property = property;
+        this.valueReference = valueReference;
         this.exception = exception;
         this.description = description;
     }
@@ -54,12 +55,12 @@ public class ProcessMessage {
         this.context = context;
     }
 
-    public String getProperty() {
-        return property;
+    public ValueReference getValueReference() {
+        return valueReference;
     }
 
-    public void setProperty(String property) {
-        this.property = property;
+    public void setValueReference(ValueReference valueReference) {
+        this.valueReference = valueReference;
     }
 
     public Exception getException() {
@@ -76,5 +77,15 @@ public class ProcessMessage {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return messageType +
+            " at " + coordinate +
+            ", context: " + context +
+            ", valueReference: " + valueReference +
+            ", exception: " + exception +
+            ", description: " + description;
     }
 }

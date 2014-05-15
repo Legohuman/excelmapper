@@ -151,9 +151,9 @@ public class CellCoordinate implements Coordinate {
 
     @Override
     public String toString() {
-        return "CellCoordinate{" +
-            "column=" + column +
-            ", row=" + row +
-            '}';
+        return
+            "(column: " + column +
+                ", row:" + row +
+                ')';
     }
 }
