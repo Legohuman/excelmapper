@@ -153,9 +153,9 @@
     <url>https://github.com/Legohuman/excelmapper/issues</url>
   </issueManagement>
   <scm>
-    <connection>scm:git:git://github.com/Legohuman/excelmapper.git</connection>
+    <connection>scm:git:http://github.com/Legohuman/excelmapper.git</connection>
     <developerConnection>scm:git:git@github.com:Legohuman/excelmapper.git</developerConnection>
-    <url>https://github.com/Legohuman/excelmapper</url>
+    <url>http://github.com/Legohuman/excelmapper</url>
   </scm>
 
   <distributionManagement>
