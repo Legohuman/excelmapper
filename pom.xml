@@ -1,15 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ru.dlevin</groupId>
-  <artifactId>excel-mapper</artifactId>
+  <groupId>com.github.excelmapper</groupId>
+  <artifactId>excelmapper</artifactId>
   <packaging>pom</packaging>
-  <version>0.1</version>
+  <version>0.1-SNAPSHOT</version>
   <name>Excel Mapper</name>
+  <url>https://github.com/Legohuman/excelmapper</url>
 
   <modules>
-    <module>excel-mapper-core</module>
-    <module>excel-mapper-samples</module>
+    <module>excelmapper-core</module>
+    <module>excelmapper-samples</module>
   </modules>
 
   <properties>
