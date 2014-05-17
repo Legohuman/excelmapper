@@ -1,4 +1,4 @@
-package ru.dlevin.excelmapper.samples;
+package ru.dlevin.excelmapper.samples.write;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;

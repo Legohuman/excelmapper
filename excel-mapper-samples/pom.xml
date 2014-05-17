@@ -17,7 +17,7 @@
     <dependency>
       <groupId>ru.dlevin</groupId>
       <artifactId>excel-mapper-core</artifactId>
-      <version>${excel-mapper.version}</version>
+      <version>0.1</version>
     </dependency>
   </dependencies>
 </project>

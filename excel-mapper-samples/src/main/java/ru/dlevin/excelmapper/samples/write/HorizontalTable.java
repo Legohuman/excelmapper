@@ -1,8 +1,6 @@
-package ru.dlevin.excelmapper.samples;
+package ru.dlevin.excelmapper.samples.write;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import ru.dlevin.excelmapper.engine.*;
@@ -20,7 +18,7 @@ import static ru.dlevin.excelmapper.engine.References.value;
  * User: Dmitry Levin
  * Date: 07.03.14
  */
-public class VerticalTable {
+public class HorizontalTable {
 
     public static void main(String[] args) throws IOException {
         FileOutputStream fileOut = null;
@@ -29,23 +27,13 @@ public class VerticalTable {
             fileOut = new FileOutputStream("workbook.xls");
 
             Sheet sheet = wb.createSheet();
-            CellStyle style = wb.createCellStyle();
-            Font font = wb.createFont();
-            font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            style.setFont(font);
-            style.setAlignment(CellStyle.ALIGN_CENTER);
-            CellGroup header = new CellGroup();
-            header.setCellStyleReference(new StaticCellStyleReference(style));
-            header.addCells(CellDefinitions.fromReferences(value("Name"), value("Post")));
-            header.addCell(new CellCoordinate(4, 0), value("Age"));
-
             CellGroup group = new CellGroup();
-            group.addCells(CellDefinitions.fromReferences(property("name"), property("post")));
-            group.addCell(new CellDefinition(value("---"), 2, 1));
-            group.addCell(property("age"));
+            group.setCursorMovementDirection(MovementDirection.DOWN);
+            group.addCells(CellDefinitions
+                .fromReferences(property("name"), property("post"), property("age"),
+                    value("---")));
             ItemContainerFactory factory = new ItemContainerFactory();
-            ItemContainer container = factory.createItemContainer(sheet, new CellCoordinate(2, 2));
-            container.addItem(null, header);
+            ItemContainer container = factory.createItemContainer(sheet, new CellCoordinate(2, 2), MovementDirection.RIGHT);
             List<Person> items =
                 Arrays.asList(new Person("John", "director", 40), new Person("Mike", "secretary", 35), new Person("Adam", "engineer", 30));
             container.addItems(items, group);

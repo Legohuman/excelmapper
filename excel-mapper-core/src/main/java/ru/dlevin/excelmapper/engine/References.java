@@ -16,9 +16,9 @@ public class References {
         return new StaticValueReference<T>(value);
     }
 
-    public static <S, D, C> ConverterReference<S, D, C> converter(ValueReference<S> valueReference,
-        Converter<S, D> converter) {
-        return new ConverterReference<S, D, C>(valueReference, converter);
+    public static ConverterReference converter(ValueReference valueReference,
+        Converter converter) {
+        return new ConverterReference(valueReference, converter);
     }
 
     public static MapPropertyValueReference key(String key) {

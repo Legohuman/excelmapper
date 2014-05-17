@@ -11,7 +11,7 @@ public class ConverterReference<S, D, C> extends AbstractProcessMessagesHolderAw
     private final ValueReference<S> wrappedRef;
     private final Converter<S, D> converter;
 
-    protected ConverterReference(ValueReference<S> wrappedRef,
+    public ConverterReference(ValueReference<S> wrappedRef,
         Converter<S, D> converter) {
         this.wrappedRef = wrappedRef;
         this.converter = converter;

@@ -24,6 +24,7 @@ public class ItemContainerFactory {
     private ConversionEngine createDefaultFormatterEngine() {
         SimpleConversionEngine simpleConversionEngine = new SimpleConversionEngine();
         simpleConversionEngine.registerConverter(Boolean.class, String.class, new BooleanStringConverter());
+        simpleConversionEngine.registerConverter(Double.class, Float.class, new DoubleFloatConverter());
         simpleConversionEngine.registerConverter(Double.class, Byte.class, new DoubleByteConverter());
         simpleConversionEngine.registerConverter(Double.class, Character.class, new DoubleCharConverter());
         simpleConversionEngine.registerConverter(Double.class, Short.class, new DoubleShortConverter());
