@@ -198,7 +198,8 @@ public class ItemContainer implements Rectangle, Postionable {
                 ((ContextAware)valueRef).setContext(item);
             }
             Object propertyValue = valueRef.getValue();
-            setCellStyle(sheetCellCoordinate, item, cellDefinition.getCellStyleReference());
+            setCellStyle(sheetCellCoordinate, item, cellDefinition.getColSpan(), cellDefinition.getRowSpan(),
+                cellDefinition.getCellStyleReference());
             setCellValue(sheetCellCoordinate, conversionEngine.convert(String.class, propertyValue));
             setCellSpans(sheetCellCoordinate, cellDefinition.getRowSpan(), cellDefinition.getColSpan());
         }
@@ -290,14 +291,18 @@ public class ItemContainer implements Rectangle, Postionable {
         throw new ItemCreationException("Can not create new item of class " + itemClass.getName(), e);
     }
 
-    private void setCellStyle(CellCoordinate cellCoordinate, Object item, CellStyleReference cellStyleReference) {
+    private void setCellStyle(CellCoordinate cellCoordinate, Object item, int colSpan, int rowSpan, CellStyleReference cellStyleReference) {
         if (cellStyleReference != null) {
             if (cellStyleReference instanceof ContextAware) {
                 ((ContextAware)cellStyleReference).setContext(item);
             }
             CellStyle cellStyle = cellStyleReference.getCellStyle();
             if (cellStyle != null) {
-                CellUtils.setCellStyle(sheet, cellCoordinate, cellStyle);
+                for (int rowNum = 1; rowNum <= rowSpan; rowNum++) {
+                    for (int colNum = 1; colNum <= colSpan; colNum++) {
+                        CellUtils.setCellStyle(getSheet(), cellCoordinate.plusCoordinate(colNum - 1, rowNum - 1), cellStyle);
+                    }
+                }
             }
         }
     }
