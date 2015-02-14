@@ -258,7 +258,7 @@ public class ItemContainer implements Rectangle, Postionable {
                 ((ContextAware)valueRef).setContext(existingItem);
                 try {
                     valueRef.setValue(conversionEngine.convert(valueRef.getType(), getCellValue(
-                        sheetCellCoordinate)));
+                        sheetCellCoordinate, valueRef.getType())));
                 } catch (Exception e) {
                     if (messagesHolder != null) {
                         messagesHolder.add(
@@ -306,8 +306,8 @@ public class ItemContainer implements Rectangle, Postionable {
         CellUtils.setValue(sheet, cellCoordinate, value);
     }
 
-    private Object getCellValue(CellCoordinate cellCoordinate) {
-        return CellUtils.getValue(sheet, cellCoordinate);
+    private Object getCellValue(CellCoordinate cellCoordinate, Class hintDestinationClass) {
+        return CellUtils.getValue(sheet, cellCoordinate, hintDestinationClass);
     }
 
     private void setCellSpans(CellCoordinate cellCoordinate, int rowSpan, int colSpan) {
